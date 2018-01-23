@@ -6,14 +6,12 @@ namespace ExpressionDecompose
 {
     public class ExpressionDecompose<T>
     {
-        private List<AtomicExpression> _listAtomicExpressions;
-
         /// <summary>
         /// Constructor
         /// </summary>
         public ExpressionDecompose()
         {
-            _listAtomicExpressions = new List<AtomicExpression>();
+            AtomicExpressions = new List<AtomicExpression>();
         }
 
         /// <summary>
@@ -35,13 +33,13 @@ namespace ExpressionDecompose
         {
             inputExpression = inputExpression is LambdaExpression lambdaExpression ? lambdaExpression.Body : inputExpression;
 
-            BinaryExpression operation = (BinaryExpression) inputExpression;
-            ExpressionType binaryOperator = operation.NodeType;
+            var operation = (BinaryExpression) inputExpression;
+            var binaryOperator = operation.NodeType;
             var processed = false;
 
             if (operation.Left is BinaryExpression leftExpression && leftExpression.Left is MemberExpression && leftExpression.Right is ConstantExpression)
             {
-                _listAtomicExpressions.Add(new AtomicExpression(leftExpression.Left, leftExpression.NodeType, leftExpression.Right, setOperation));
+                AtomicExpressions.Add(new AtomicExpression(leftExpression.Left, leftExpression.NodeType, leftExpression.Right, binaryOperator));
                 processed = true;
             }
             else if (!(operation.Left is MemberExpression))
@@ -53,7 +51,7 @@ namespace ExpressionDecompose
             if (operation.Right is BinaryExpression rightExpression && rightExpression.Left is MemberExpression && rightExpression.Right is ConstantExpression)
             {
                 processed = true;
-                _listAtomicExpressions.Add(new AtomicExpression(rightExpression.Left, rightExpression.NodeType, rightExpression.Right, setOperation));
+                AtomicExpressions.Add(new AtomicExpression(rightExpression.Left, rightExpression.NodeType, rightExpression.Right, setOperation));
             }
             else if (!(operation.Right is ConstantExpression))
             {
@@ -63,14 +61,14 @@ namespace ExpressionDecompose
             
             if (inputExpression is BinaryExpression inputExpressionAsBinaryExpression && !processed)
             {
-                _listAtomicExpressions.Add(new AtomicExpression(inputExpressionAsBinaryExpression.Left, inputExpressionAsBinaryExpression.NodeType, inputExpressionAsBinaryExpression.Right, setOperation));
+                AtomicExpressions.Add(new AtomicExpression(inputExpressionAsBinaryExpression.Left, inputExpressionAsBinaryExpression.NodeType, inputExpressionAsBinaryExpression.Right, setOperation));
             }
         }
 
         // returns decomposed results
-        public List<AtomicExpression> AtomicExpressions => _listAtomicExpressions;
+        public List<AtomicExpression> AtomicExpressions { get; private set; }
 
         // resets lists of results
-        public void Reset() => _listAtomicExpressions = new List<AtomicExpression>();
+        public void Reset() => AtomicExpressions = new List<AtomicExpression>();
     }
 }

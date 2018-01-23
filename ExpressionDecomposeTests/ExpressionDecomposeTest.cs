@@ -19,10 +19,10 @@ namespace ExpressionDecomposeTests
         public void Test_Count()
         {
             // Arrange
-            Expression<Func<DummyClass, bool>> lambda = x => x.FirstName == "Random firstname" &&
-                                                             x.LastName == "Random lastname" ||
-                                                             x.LastName != "Testy"
-                                                             && x.Age > 10;
+            Expression<Func<DummyClass, bool>> lambda = x => x.FirstName == "Random firstname" && 
+                                                             x.LastName == "Random lastname" || 
+                                                             x.LastName != "Testy" &&
+                                                             x.Age > 10; 
             // Act
             _decompose.Decompose(lambda);
                 
