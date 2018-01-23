@@ -14,7 +14,7 @@ _decompose.Decompose(lambda);
 
 Will result in:
 
-- 'FirstName' Equal "Random firstname" (OrElse)
+- 'FirstName' Equal "Random firstname" (AndAlso)
 - 'LastName' Equal "Random lastname" (OrElse)
-- 'LastName' NotEqual "Testy" (OrElse)
+- 'LastName' NotEqual "Testy" (AndAlso)
 - 'Age' GreaterThan 10 (OrElse)
