@@ -1,6 +1,6 @@
-Expression Decomposer
+# Very simple Expression Decomposer
 
-```      
+```
 _decompose = new ExpressionDecompose<DummyClass>();
 
 
@@ -11,3 +11,10 @@ Expression<Func<DummyClass, bool>> lambda = x => x.FirstName == "Random firstnam
 _decompose.Decompose(lambda);
 
 ```
+
+Will result in:
+
+- 'FirstName' Equal "Random firstname" (OrElse)
+- 'LastName' Equal "Random lastname" (OrElse)
+- 'LastName' NotEqual "Testy" (OrElse)
+- 'Age' GreaterThan 10 (OrElse)
